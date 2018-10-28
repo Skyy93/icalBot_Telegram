@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 #
 # Simple Bot to read in .ics files and sending reminders
+# under MIT-License
 
 
 """

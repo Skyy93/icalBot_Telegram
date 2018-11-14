@@ -1,6 +1,6 @@
 # iCal-Reminderbot for Telegram
 
-This bot will remind you in telegram with messages and reads in a ics-file
+This bot will remind you in telegram with messages and reads in a ics-file. It just supports reminder with days at the moment!
 
 To start the bot just use:
 ```sh

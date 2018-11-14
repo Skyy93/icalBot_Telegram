@@ -78,9 +78,16 @@ def todayReminder():
     today = datetime.today().date()
     botText = []
     for component in gcal.walk():
-        if component.get('dtstart') is not None:
-            if component.get('dtstart').dt.date() == today:
-                botText.append("Termin: " +str(component.get('summary')) + "\nDatum: " + str(component.get('DTSTART').dt.strftime("%d-%m-%Y %H:%M")) + "\nLocation: " + str(component.get('LOCATION')) + "\nBeschreibung: " + str(component.get('DESCRIPTION')))
+        if component.name == "VEVENT":
+            if component.get('dtstart') is not None:
+                if component.get('dtstart').dt.date() == today:
+                    botText.append("Termin: " +str(component.get('summary')) + "\nDatum: " + str(component.get('DTSTART').dt.strftime("%d-%m-%Y %H:%M")) + "\nLocation: " + str(component.get('LOCATION')) + "\nBeschreibung: " + str(component.get('DESCRIPTION')))
+                if component.subcomponents:
+                    for a in component.to_ical().split():
+                        if "TRIGGER" in str(a):
+                            days = int("".join(filter(str.isdigit, str(a))))
+                            if (component.get('dtstart').dt - timedelta(days=days)).date() == today:
+                                botText.append("ERINNERUNG AN: \nTermin: " +str(component.get('summary')) + "\nDatum: " + str(component.get('DTSTART').dt.strftime("%d-%m-%Y %H:%M")) + "\nLocation: " + str(component.get('LOCATION')) + "\nBeschreibung: " + str(component.get('DESCRIPTION')))    
     return botText
 
 
